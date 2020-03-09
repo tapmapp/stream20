@@ -9,13 +9,11 @@ const socket = (io) => {
         const timeElem = document.getElementById('time');
         const difference = document.getElementById('difference');
 
-        var chunksL = 5;
+        var chunksL = 15;
         var chunks = [];
         var total = '';
 
         socket.on('frame', (data) => {
-
-            console.log(data)
 
             if(data.index === chunks.length) {
                 chunks.push(data.index);

@@ -1,14 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import * as http from 'http';
-import MongoDBClient from './db/db';
+//import MongoDBClient from './db/db';
 import * as socket from './socket/socket';
 
 const app = express();
 const server = http.createServer(app);
 
 // MONGO DB
-const mongoDB = new MongoDBClient().connectDB();
+// const mongoDB = new MongoDBClient().connectDB();
 
 // SOCKET INITIALIZATION
 socket.initialize(server);
