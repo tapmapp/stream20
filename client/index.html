@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>RaspStream</title>
+        <style>
+            img {transform: rotate(180deg); }
+        </style>
+    </head>
+    <body>
+        <h1>Streaming</h1>
+        Image:
+        <span id="date"></span>
+        <br/>
+        Current time
+        <span id="time"></span>
+        <br/>
+        Difference
+        <span id="difference"></span>
+        <br/>
+        <img id="image">
+        <script type="text/javascript" src="./js/socket.io-client.js"></script>
+        <script type="text/javascript" src="./js/auth.js"></script>
+        <script type="text/javascript" src="./js/socket.js"></script>
+        <script>
+
+            document.addEventListener("DOMContentLoaded", (event) => { 
+                
+                var farmPath = '1234';
+                var authModule = auth();
+                var socketModule = socket(io);
+
+                authModule.authenticate(farmPath, 'password').then(response => {
+                    socketModule.connectSocket(farmPath);
+                });
+
+            });
+
+        </script>
+    </body>
+</html>
