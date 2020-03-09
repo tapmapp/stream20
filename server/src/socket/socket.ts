@@ -6,20 +6,9 @@ import { Server } from 'http';
 var io: SocketIO.Server;
 var watchers : string[] = [];
 
-<<<<<<< HEAD
-export const initialize = (server: Server): Promise<SocketIO.Server> => {
-    return new Promise((resolve) => {
-        io = SocketIO(server);
-        io.on('connection', (socket) => {
-            console.log('Socket Server initialized!');
-        });
-        resolve(io);
-    });
-=======
 export const initialize = (server: Server): void => {
     io = SocketIO(server);
     io.on('connection', () => console.log('Socket Server initialized!'));
->>>>>>> e3b93e55637c7c9b4ead6632b5bd10a6b2eb37e0
 };
 
 export const connect = (boardSerialToken: string): void => {
@@ -41,12 +30,7 @@ export const connect = (boardSerialToken: string): void => {
 
 const onFrameSocketEvent = (socket, eventName): void => {
     socket.on(eventName, data => {
-<<<<<<< HEAD
-        console.log('hi!')
-        io.emit('frame', data);
-=======
         socket.compress(true).volatile.emit(eventName, data);
->>>>>>> e3b93e55637c7c9b4ead6632b5bd10a6b2eb37e0
     });
 };
 
