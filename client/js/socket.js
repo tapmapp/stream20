@@ -2,7 +2,12 @@ const socket = (io) => {
 
     function startStreaming(socket) {
 
-        console.log('Streaming Started!')
+        console.log('Streaming Started!');
+
+        const image = document.getElementById('image');
+        const dateElem = document.getElementById('date');
+        const timeElem = document.getElementById('time');
+        const difference = document.getElementById('difference');
 
         var chunksL = 5;
         var chunks = [];
