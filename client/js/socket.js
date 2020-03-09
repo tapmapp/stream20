@@ -10,6 +10,8 @@ const socket = (io) => {
 
         socket.on('frame', (data) => {
 
+            console.log(data)
+
             if(data.index === chunks.length) {
                 chunks.push(data.index);
                 total += data.chunk;

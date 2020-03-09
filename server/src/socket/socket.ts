@@ -9,7 +9,7 @@ var watchers : string[] = [];
 export const initialize = (server: Server): Promise<SocketIO.Server> => {
     return new Promise((resolve) => {
         io = SocketIO(server);
-        io.on('connection', () => {
+        io.on('connection', (socket) => {
             console.log('Socket Server initialized!');
         });
         resolve(io);
@@ -19,9 +19,15 @@ export const initialize = (server: Server): Promise<SocketIO.Server> => {
 export const connect = (boardSerialToken: string): void => {
     if(watchers.indexOf(boardSerialToken) === -1) {
         watchers.push(boardSerialToken);
-        io.of(`/${boardSerialToken.toString()}`).on('connect', (socket) => {
+        var streamSocket = io.of(`/${boardSerialToken.toString()}`).on('connect', (socket) => {
             console.log('Socket connected!');
-            onFrameSocketEvent(socket, 'frame');
+            //onFrameSocketEvent(socket, 'frame');
+
+
+            socket.on('frame', data => {
+                streamSocket.compress(true).emit('frame', data);
+            });
+
             onDisconnectSocketEvent(socket, 'disconnect');
         });
     }
@@ -29,7 +35,8 @@ export const connect = (boardSerialToken: string): void => {
 
 const onFrameSocketEvent = (socket, eventName): void => {
     socket.on(eventName, data => {
-        socket.volatile.emit(eventName, data);
+        console.log('hi!')
+        io.emit('frame', data);
     });
 };
 
