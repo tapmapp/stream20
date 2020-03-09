@@ -26,11 +26,11 @@
             document.addEventListener("DOMContentLoaded", (event) => { 
                 
                 var farmPath = '1234';
-                var authModule = auth();
-                var socketModule = socket(io);
+                var AuthModule = auth();
+                var SocketModule = socket(io);
 
-                authModule.authenticate(farmPath, 'password').then(response => {
-                    socketModule.connectSocket(farmPath);
+                AuthModule.authenticate(farmPath, 'password').then(response => {
+                    SocketModule.connectSocket(farmPath);
                 });
 
             });
