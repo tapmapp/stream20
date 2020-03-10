@@ -12,7 +12,6 @@
     "node-dht-sensor": "^0.4.1",
     "raspivid-jpeg-stream": "^1.0.0",
     "request": "^2.88.2",
-    "resize-base64": "^1.0.12",
     "sharp": "^0.24.1",
     "socket.io-client": "^2.3.0"
   }
