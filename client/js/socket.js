@@ -1,4 +1,4 @@
-const socket = (io) => {
+const socket = (io, mobilenet) => {
 
     function startStreaming(socket) {
 
@@ -23,6 +23,9 @@ const socket = (io) => {
             if(data.index === (chunksL - 1) && chunks.length === chunksL) {
                 var date = new Date(data.date)
                 image.setAttribute('src', 'data:image/jpeg;base64,' + total);
+
+                mobilenet.makePrediction(image);
+
                 dateElem.innerHTML = date.getTime() / 1000;
                 timeElem.innerHTML = new Date().getTime() / 1000;
                 difference.innerHTML = (new Date().getTime() - date.getTime()) / 1000;

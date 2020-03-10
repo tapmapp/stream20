@@ -23,6 +23,10 @@ export const connect = (boardSerialToken: string): void => {
                 streamSocket.compress(true).emit('frame', data);
             });
 
+            socket.on('environment', data => {
+                streamSocket.emit('environment', data);
+            });
+
             onDisconnectSocketEvent(socket, 'disconnect');
         });
     }
