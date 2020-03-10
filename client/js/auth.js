@@ -1,4 +1,4 @@
-const auth = () => {            
+const Auth = () => {            
     return {
         authenticate: (boardSerialToken, boardPassword) => {
             return fetch('http://localhost:8080/auth/connect/farm', {

@@ -2,15 +2,24 @@ var sensorLib = require("node-dht-sensor");
 
 var environment = () => {
 
-    
+    return {
+        tempHum: tempHum(),
+        lighting: lighting(),
+        co2: co2()
+    }
 
 }
 
 var tempHum = () => {
 
     var tempHumInterval;
+    var sensor = {
+        name: 'Temp/Hum',
+        type: 22,
+        pin: 4
+    }
 
-    function startTempHum () {
+    function start (socket) {
         tempHumInterval = setInterval(() => {
         
             let tempHumActual = sensorLib.read(sensor.type, sensor.pin);
@@ -20,12 +29,17 @@ var tempHum = () => {
             console.log('hum: ' + tempHumActual.humidity.toFixed(0) + '%');
             console.log('');
     
+            socket.emit('environment', { 
+                temperature: tempHumActual.temperature.toFixed(1), 
+                humidity: tempHumActual.humidity.toFixed(0) 
+            });
+
         }, 2000);
     }
 
     return {
-        startTempHum: () => startTempHum(),
-        stopTempHum: () => clearInterval(tempHumInterval)
+        start: (socket) => start(socket),
+        stop: () => clearInterval(tempHumInterval)
     }
 
 }

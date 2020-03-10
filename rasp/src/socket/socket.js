@@ -1,12 +1,13 @@
 const io = require('socket.io-client');
 const Streaming = require('../streaming/streaming')();
+const Environment = require('../environment/environment')();
 
 const devUrl = 'http://10.3.141.250:8080';
 const prodUrl = '';
 
 const socket = () => {
 
-    function connectSocket(farmPath, streaming) {
+    function connectSocket(farmPath) {
 
         var socket = io.connect(`${devUrl}/${farmPath}`, {
             transports: ['websocket'],
@@ -21,7 +22,8 @@ const socket = () => {
         socket.on('connect', () => {
             console.log('Farm connected to socket!')
             clearInterval(socketInterval);
-            streaming.startStreaming(socket);
+            Streaming.startStreaming(socket);
+            Environment.tempHum.start(socket);
         });
 
         socket.on('disconnect', () => {
@@ -35,7 +37,7 @@ const socket = () => {
 
     return {
         connect: (farmPath) => {
-            connectSocket(farmPath, Streaming);
+            connectSocket(farmPath);
         }
     }
 }

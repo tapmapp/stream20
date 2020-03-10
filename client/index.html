@@ -3,11 +3,17 @@
     <head>
         <title>RaspStream</title>
         <style>
-            img {transform: rotate(180deg); }
+            img {transform: rotate(0deg); }
         </style>
     </head>
     <body>
         <h1>Streaming</h1>
+        Temperature
+        <span id="temperature"></span>
+        <br/>
+        Humidity
+        <span id="humidity"></span>
+        <br/>
         Image:
         <span id="date"></span>
         <br/>
@@ -18,27 +24,35 @@
         <span id="difference"></span>
         <br/>
         <img id="image">
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"></script>
+
+        <canvas id="canvas"></canvas>
+
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix"></script>
         <script type="text/javascript" src="./js/mobilenet.js"></script>
         <script type="text/javascript" src="./js/socket.io-client.js"></script>
         <script type="text/javascript" src="./js/auth.js"></script>
         <script type="text/javascript" src="./js/socket.js"></script>
+        <script type="text/javascript" src="./js/streaming.js"></script>
+        <script type="text/javascript" src="./js/environment.js"></script>
         <script>
+            
+            var farmPath = '1234';
 
             document.addEventListener("DOMContentLoaded", async (event) => { 
-                
-                console.log(mobilenet)
 
-                var farmPath = '1234';
-                var AuthModule = auth();
-                var MobilenetModule = await Mobilenet(mobilenet);
-                MobilenetModule.loadModel();
+                var mobilenetModule = await Mobilenet();
+                mobilenetModule.loadModel(bodyPix);
+
+                var authModule = Auth();
+                var environmentModule = Environment();
+                var streamingModule = Streaming(mobilenetModule);
+
                
-                var SocketModule = socket(io, MobilenetModule);
+                var socketModule = Socket(io, environmentModule, streamingModule);
                 
-                AuthModule.authenticate(farmPath, 'password').then(response => {
-                    SocketModule.connectSocket(farmPath);
+                authModule.authenticate(farmPath, 'password').then(response => {
+                    socketModule.connectSocket(farmPath);
                 });
 
             });

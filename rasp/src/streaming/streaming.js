@@ -7,11 +7,11 @@ var streaming = () => {
     function startStreaming(socket) {
 
         camera = new RaspividJpegStream({
-            'width': 210,
-            'height': 120,
+            'width': 270,
+            'height': 140,
             'timeout': 0,
             'framerate': 15,
-            'bitrate': 25000000
+            'bitrate': 30000000
         });
 
         var chunks = 15;
