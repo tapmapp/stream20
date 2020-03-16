@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "start": "node ./build/server.js"
+    "start": "node ./build/server.js",
+    "dev": "tsc && node ./build/server.js --dev",
+    "build": "tsc && node ./build/server.js --prod"
   },
   "author": "Francisco Rcoa",
   "license": "ISC",

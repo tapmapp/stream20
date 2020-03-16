@@ -1,7 +1,7 @@
 const socket = require('./socket/socket')();
 const auth = require('./auth/auth')(socket);
 
-const boardSerialToken = '1234';
-const secret = 'Password';
+// ENVIRONMENT
+const Env = require('./env/env');
 
-auth.authenticate(boardSerialToken, secret);
+auth.authenticate(Env.boardSerialToken, Env.boardPassword);
