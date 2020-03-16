@@ -1,5 +1,9 @@
 var request = require('request');
 
+const devUrl = 'http://10.3.141.250:8080';
+const prodUrl = 'wss://stream-269511.appspot.com';
+
+
 const auth = (socket) => {         
 
     var boardSerialToken;
@@ -12,7 +16,7 @@ const auth = (socket) => {
 
         var json = { boardSerialToken, boardPassword };
         console.log(json)
-        var url = 'http://10.3.141.250:8080/auth/connect/farm';
+        var url = 'https://stream-269511.appspot.com/auth/connect/farm';
     
         var options = {
             url: url,

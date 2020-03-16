@@ -3,13 +3,13 @@ const Streaming = require('../streaming/streaming')();
 const Environment = require('../environment/environment')();
 
 const devUrl = 'http://10.3.141.250:8080';
-const prodUrl = '';
+const prodUrl = 'wss://stream-269511.appspot.com';
 
 const socket = () => {
 
     function connectSocket(farmPath) {
 
-        var socket = io.connect(`${devUrl}/${farmPath}`, {
+        var socket = io.connect(`${prodUrl}/${farmPath}`, {
             transports: ['websocket'],
             reconnect: true
         });

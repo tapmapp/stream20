@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import path from 'path';
 import * as http from 'http';
 //import MongoDBClient from './db/db';
 import * as socket from './socket/socket';
@@ -14,7 +15,8 @@ const server = http.createServer(app);
 socket.initialize(server);
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '../build/public/')));
 app.use((req, res, next) => {
     
     res.header('Access-Control-Allow-Origin', '*');
@@ -29,8 +31,14 @@ app.use((req, res, next) => {
     
 });
 
+
+
 // ROUTES
 import * as auth from './auth/auth.routes';
+
+app.get('/', (req, res, next) => {
+  res.sendFile('./public/index.html', {root: __dirname});
+});
 
 app.use('/auth', auth.router);
 
